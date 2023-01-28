@@ -21,6 +21,9 @@ def menu_file_exit():
 
 def menu_help_about():
     about_window.show(wait=True)
+    pos_str = app.tk.geometry().split('+')
+    pos = (int(pos_str[1]), int(pos_str[2]))
+    about_window.tk.geometry(f"{about_window.width}x{about_window.height}+{pos[0] + app.width // 2 - about_window.width // 2}+{pos[1] + app.height // 2 - about_window.height // 2}")
 
 def show_context_menu(event):
     try:
@@ -149,7 +152,7 @@ VIDEO_PREVIEW_WIDTH = 160
 VIDEO_PREVIEW_HEIGHT = 120
 
 # App
-app = App(title="YaYtD", width=800, height=700)
+app = App(title="YayTD", width=800, height=700)
 app.image = Path(__file__).resolve().with_name("yaytd_logo_64.png").as_posix()
 app.tk.minsize(800, 700)
 
@@ -192,7 +195,7 @@ about_window.tk.resizable(0,0)
 box = Box(about_window, align="left", width="fill")
 close_button = PushButton(box, command=lambda : about_window.hide(), text="Close", align="bottom")
 pytube_logo = Picture(box, image=Path(__file__).resolve().with_name("yaytd_logo_64.png").as_posix())
-Text(box, "YaYtD", size=12).tk.configure(font=("bold"))
+Text(box, "YayTD", size=12).tk.configure(font=("bold"))
 Text(box, "Yet Another YouTube Downloader\nis a simple GUI built on top of 'pytube'\nwith 'guizero' and a little bit of 'tkinter'", size=10)
 pytube_link = Text(box, text="pytube", color="blue")
 pytube_link.when_clicked = lambda _ : webbrowser.open("https://github.com/pytube/pytube")
