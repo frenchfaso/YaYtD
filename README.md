@@ -1,7 +1,7 @@
 
 <div align="center">
 <img src="https://user-images.githubusercontent.com/1913203/215260281-edf84b41-6622-4a88-8b44-1e04085e4404.png"/>
-<h1>YaYtD</h1>
+<h1>YayTD</h1>
 <h5>Yet Another YouTube Downloader</h5>
 <img src="https://user-images.githubusercontent.com/1913203/215263940-ddc129bf-a363-4549-921d-6f3177e0374f.png"/>
 </div>
