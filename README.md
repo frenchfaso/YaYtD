@@ -31,6 +31,6 @@ python yaytd.py
 ```
 or build a single file executable for your platform with:
 ```console
-pyinstaller -F yaytd.py
+pyinstaller yaytd.spec
 ```
 which should appear shortly after in the `dist` folder.
