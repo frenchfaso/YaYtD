@@ -7,7 +7,7 @@
 </div>
 
 # What
-YaYtD is a simple GUI built on top of [pytube](https://github.com/pytube/pytube) with [guizero](https://lawsie.github.io/guizero/) and a bit of [tkinter](https://docs.python.org/3/library/tkinter.html#module-tkinter) where necessary.
+YayTD is a simple GUI built on top of [pytube](https://github.com/pytube/pytube) with [guizero](https://lawsie.github.io/guizero/) and a bit of [tkinter](https://docs.python.org/3/library/tkinter.html#module-tkinter) where necessary.
 
 It lets you find all the streams associated with a YouTube video (audio only, video only or both combined) and download them to your machine for your convenience.
 # Did we really need another one?
@@ -24,11 +24,11 @@ to create a python virtual environment in which to pip install the required modu
 ```console
 pip install -r requiremnts.txt
 ```
-now you can either run yaytd with
+now you can either run YayTD with
 ```console
 python yaytd.py
 ```
-or build a single file executable for you platform with:
+or build a single file executable for your platform with:
 ```console
 pyinstaller -F yaytd.py
 ```
