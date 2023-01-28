@@ -13,8 +13,9 @@ import webbrowser
 
 # Functions and Callbacks
 def menu_file_paste():
-    yt_url.tk.event_generate("<<Paste>>")
-    load_url_button.enable()
+    if yt_url.value == "":
+        yt_url.tk.event_generate("<<Paste>>")
+        load_url_button.enable()
 
 def menu_file_exit():
     app.destroy()
@@ -50,8 +51,10 @@ def on_key_pressed(event):
         on_click_load_button()
 
 def on_app_focus(event):
-    if(event.widget == app.tk and yt_url.value == ""):
+    if(event.widget == app.tk):
+        app.tk.unbind("<FocusIn>")
         menu_file_paste()
+
 
 def on_click_load_button():
     stream_list.clear()
