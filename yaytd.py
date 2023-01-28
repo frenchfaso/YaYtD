@@ -11,7 +11,7 @@ from pathlib import Path
 from datetime import timedelta
 import webbrowser
 
-# Menu Callbacks
+# Functions and Callbacks
 def menu_file_paste():
     yt_url.tk.event_generate("<<Paste>>")
     load_url_button.enable()
@@ -20,10 +20,18 @@ def menu_file_exit():
     app.destroy()
 
 def menu_help_about():
-    about_window.show(wait=True)
     pos_str = app.tk.geometry().split('+')
     pos = (int(pos_str[1]), int(pos_str[2]))
-    about_window.tk.geometry(f"{about_window.width}x{about_window.height}+{pos[0] + app.width // 2 - about_window.width // 2}+{pos[1] + app.height // 2 - about_window.height // 2}")
+    about_window.tk.geometry(f"{about_window.width}x{about_window.height}+{pos[0] + APP_WIDTH // 2 - about_window.width // 2}+{pos[1] + APP_HEIGHT // 2 - about_window.height // 2}")
+    about_window.show(wait=True)
+    about_window.repeat(function=stay_modal, args=[about_window], time=100)
+
+def on_about_close():
+    about_window.cancel(stay_modal)
+    about_window.hide()
+
+def stay_modal(widget):
+    widget.tk.lift()
 
 def show_context_menu(event):
     try:
@@ -31,7 +39,6 @@ def show_context_menu(event):
     finally:
         context_menu.grab_release()
 
-# Functions
 def url_update():
     if yt_url.value != "":
         load_url_button.enable()
@@ -41,6 +48,10 @@ def url_update():
 def on_key_pressed(event):
     if event.key != "" and ord(event.key) == 13:
         on_click_load_button()
+
+def on_app_focus(event):
+    if(event.widget == app.tk and yt_url.value == ""):
+        menu_file_paste()
 
 def on_click_load_button():
     stream_list.clear()
@@ -148,13 +159,17 @@ def update_status_bar(message):
 # Variables
 streams = []
 downloads = {}
+APP_WIDTH = 800
+APP_HEIGHT = 700
 VIDEO_PREVIEW_WIDTH = 160
 VIDEO_PREVIEW_HEIGHT = 120
 
 # App
-app = App(title="YayTD", width=800, height=700)
+app = App(title="YayTD", width=APP_WIDTH, height=APP_HEIGHT)
+
 app.image = Path(__file__).resolve().with_name("yaytd_logo_64.png").as_posix()
 app.tk.minsize(800, 700)
+app.tk.bind("<FocusIn>", on_app_focus)
 
 # Widgets
 main_menu = MenuBar(app, toplevel=["File", "Help"], options=[[["Paste", menu_file_paste],["Exit", menu_file_exit]],[["About",menu_help_about]]])
@@ -171,7 +186,6 @@ box_preview = Box(title_video_preview, layout="grid", align="left")
 video_thumbnail = Picture(box_preview, grid=[0,0,1,6], width=VIDEO_PREVIEW_WIDTH, height=VIDEO_PREVIEW_HEIGHT, image=Image.new(mode="RGB", size=(VIDEO_PREVIEW_WIDTH,VIDEO_PREVIEW_HEIGHT), color="gray"), align="top")
 spacer = Box(box_preview, grid=[1,0], width=15, height="fill")
 title_label = Text(box_preview, grid=[2,0], text="Title:", align="left", bg="grey", color="lightgray")
-# title_label.tk.configure(font=("bold"))
 video_title = Text(box_preview, grid=[2,1], align="left")
 author_label = Text(box_preview,grid=[2,2], text="Author:", align="left", bg="grey", color="lightgray")
 video_author = Text(box_preview,grid=[2,3], align="left")
@@ -193,7 +207,7 @@ context_menu.add_command(label ="Paste", command=menu_file_paste)
 about_window = Window(app, title="About", visible=False, width=300, height=250)
 about_window.tk.resizable(0,0)
 box = Box(about_window, align="left", width="fill")
-close_button = PushButton(box, command=lambda : about_window.hide(), text="Close", align="bottom")
+close_button = PushButton(box, command=lambda : about_window._close_window(), text="Close", align="bottom")
 pytube_logo = Picture(box, image=Path(__file__).resolve().with_name("yaytd_logo_64.png").as_posix())
 Text(box, "YayTD", size=12).tk.configure(font=("bold"))
 Text(box, "Yet Another YouTube Downloader\nis a simple GUI built on top of 'pytube'\nwith 'guizero' and a little bit of 'tkinter'", size=10)
@@ -206,6 +220,7 @@ guizero_link.tk.configure(cursor="hand2")
 tkinter_link = Text(box, "tkinter", color="blue")
 tkinter_link.when_clicked = lambda _ : webbrowser.open("https://docs.python.org/3/library/tkinter.html")
 tkinter_link.tk.configure(cursor="hand2")
+about_window.when_closed = on_about_close
 
 # Display
 app.display()
