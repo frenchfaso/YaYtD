@@ -29,8 +29,18 @@ now you can either run YayTD with
 ```console
 python yaytd.py
 ```
-or build a single file executable for your platform with:
+or build a single file executable for your platform:
+
+Linux
 ```console
-pyinstaller yaytd.spec
+pyinstaller yaytd_lin.spec
+```
+Windows (available soon)
+```console
+pyinstaller yaytd_win.spec
+```
+Mac
+```console
+pyinstaller yaytd_mac.spec
 ```
 which should appear shortly after in the `dist` folder.
