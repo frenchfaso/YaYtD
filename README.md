@@ -10,7 +10,7 @@
 # What
 YayTD is a simple GUI built on top of [pytube](https://github.com/pytube/pytube) with [guizero](https://lawsie.github.io/guizero/) and a bit of [tkinter](https://docs.python.org/3/library/tkinter.html#module-tkinter) where necessary.
 
-It lets you find all the streams associated with a YouTube video (audio only, video only or both combined) and download them to your machine for your convenience.
+It lets you find all streams associated with a YouTube video (audio only, video only or both combined) and download them to your machine for your convenience.
 # Did we really need another one?
 Probably not. But it seemed the perfect toy-project to learn about guizero, additionally, as an occasional user of the pytube cli I wondered how a handy GUI would have looked like.
 # Install
