@@ -36,7 +36,7 @@ Linux
 ```console
 pyinstaller yaytd_lin.spec
 ```
-Windows (available soon)
+Windows
 ```console
 pyinstaller yaytd_win.spec
 ```
