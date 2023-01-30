@@ -1,7 +1,8 @@
 # Imports
+import sys
 from guizero import *
 from PIL import Image
-from tkinter import Menu
+from tkinter import Menu, font
 from tkinter.constants import *
 from tkinter.ttk import Progressbar
 from pytube import YouTube
@@ -166,12 +167,20 @@ APP_WIDTH = 800
 APP_HEIGHT = 700
 VIDEO_PREVIEW_WIDTH = 160
 VIDEO_PREVIEW_HEIGHT = 120
+FONT = None
+
+match sys.platform:
+    case "darwin":
+        FONT = "SF Mono"
+    case "win32":
+        FONT = "Consolas"
+    case _:
+        FONT = "DejaVu Sans Mono"
 
 # App
 app = App(title="YayTD", width=APP_WIDTH, height=APP_HEIGHT)
-
 app.image = Path(__file__).resolve().with_name("yaytd_logo_64.png").as_posix()
-app.tk.minsize(800, 700)
+app.tk.minsize(APP_WIDTH, APP_HEIGHT)
 app.tk.bind("<FocusIn>", on_app_focus)
 
 # Widgets
@@ -196,7 +205,7 @@ duration_label = Text(box_preview, grid=[2,4], text="Duration:", align="left", b
 video_duration = Text(box_preview, grid=[2,5], align="left")
 
 stream_list = ListBox(app, width="fill", height="fill", scrollbar=True, command=stream_selected, multiselect=True)
-stream_list.font = "Liberation Mono"
+stream_list.font = FONT
 stream_list.text_size = 12
 box_bottom = Box(app, align="bottom", width="fill")
 status_bar = Text(box_bottom, text="Yet Another YouTube Downloader", align="left")
@@ -207,7 +216,7 @@ context_menu = Menu(input_box.tk, tearoff = 0)
 context_menu.add_command(label ="Paste", command=menu_file_paste)
 
 # Windows
-about_window = Window(app, title="About", visible=False, width=300, height=250)
+about_window = Window(app, title="About", visible=False, width=300, height=260)
 about_window.tk.resizable(0,0)
 box = Box(about_window, align="left", width="fill")
 close_button = PushButton(box, command=lambda : about_window._close_window(), text="Close", align="bottom")
