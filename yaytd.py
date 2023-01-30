@@ -171,7 +171,7 @@ FONT = None
 
 match sys.platform:
     case "darwin":
-        FONT = "SF Mono"
+        FONT = "Monaco"
     case "win32":
         FONT = "Consolas"
     case _:
