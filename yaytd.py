@@ -179,7 +179,7 @@ match sys.platform:
 
 # App
 app = App(title="YayTD", width=APP_WIDTH, height=APP_HEIGHT)
-app.image = Path(__file__).resolve().with_name("yaytd_logo_64.png").as_posix()
+app.icon = Path(__file__).resolve().with_name("yaytd_logo_64.png").as_posix()
 app.tk.minsize(APP_WIDTH, APP_HEIGHT)
 app.tk.bind("<FocusIn>", on_app_focus)
 
