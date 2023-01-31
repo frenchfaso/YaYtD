@@ -60,6 +60,7 @@ def on_app_focus(event):
 def on_click_load_button():
     stream_list.clear()
     streams.clear()
+    downloads.clear()
     video_thumbnail.image = Image.new(mode="RGB", size=(VIDEO_PREVIEW_WIDTH,VIDEO_PREVIEW_HEIGHT), color="gray")
     video_title.value = ""
     video_duration.value = ""
@@ -132,22 +133,23 @@ def load_streams(yt):
         stream_list.append(line)
 
 def on_click_download_button():
-    downloads.clear()
     if stream_list.value != None:
         if len(stream_list.value) == 1:
             id = stream_list.items.index(stream_list.value[0])
             stream = streams[id]
             file_name = app.select_file(save=True, filename=f"{stream.itag}-{stream.default_filename}", folder=Path.home())
-            t = threading.Thread(target=download_stream, args=[stream, file_name])
-            t.start()
-        else:
-            folder = app.select_folder(title="Select folder", folder=Path.home())
-            for item in stream_list.value:
-                id = stream_list.items.index(item)
-                stream = streams[id]
-                file_name = Path(folder).joinpath(f"{stream.itag}-{stream.default_filename}")
+            if file_name:
                 t = threading.Thread(target=download_stream, args=[stream, file_name])
                 t.start()
+        else:
+            folder = app.select_folder(title="Select folder", folder=Path.home())
+            if folder:
+                for item in stream_list.value:
+                    id = stream_list.items.index(item)
+                    stream = streams[id]
+                    file_name = Path(folder).joinpath(f"{stream.itag}-{stream.default_filename}")
+                    t = threading.Thread(target=download_stream, args=[stream, file_name])
+                    t.start()
 
 def download_stream(stream, file_name):
     try:
