@@ -14,7 +14,7 @@ It lets you find all streams associated with a YouTube video (audio only, video 
 # Did we really need another one?
 Probably not. But it seemed the perfect toy-project to learn about guizero, additionally, as an occasional user of the pytube cli I wondered how a handy GUI would have looked like.
 # Install
-## (work in progress... pre-built binaries should be available soon)
+## (work in progress... pre-built binaries should be available soon... for real!)
 Head to the releases and download your pre-built flavor (Linux, Mac, Windows)
 
 Or clone this repo and do:
