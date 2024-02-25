@@ -83,9 +83,7 @@ def main():
     def load_video_url(url):
         try:
             yt = YouTube(url, on_progress_callback=on_download_progress, on_complete_callback=on_download_complete)
-            video_title.value = yt.title
-            video_duration.value = f"{timedelta(seconds=yt.length)}"
-            video_author.value = yt.author
+            app.after(0, update_url_info, [yt.title, yt.length, yt.author])
             app.after(0, update_thumbnail, [yt.thumbnail_url])
             load_streams(yt)
         except:
@@ -97,20 +95,16 @@ def main():
     def on_download_progress(stream, chunk, remaining):
         percent = (100*(stream.filesize-remaining))/stream.filesize
         id = streams.index(stream)
-        base_string = stream_list.items[id]
-        progress_string = f"{percent:>5.0f}%"
-        updated_string = f"{base_string[:48]}{progress_string}{base_string[54:]}"
-        stream_list.remove(stream_list.items[id])
-        stream_list.insert(id, updated_string)
+        app.after(0, update_stream_list, [id, percent])
 
     def on_download_complete(stream, file_name):
         downloads[stream.itag] = True
-        update_status_bar(f"Download {sum(downloads.values())}/{len(downloads)} completed")
+        msg = f"Download {sum(downloads.values())}/{len(downloads)} completed"
+        app.after(0, update_status_bar, [msg])
 
     def load_streams(yt):
         app.after(0, update_status_bar, ["Searching streams..."])
         yt_streams = yt.streams
-        app.after(0, update_status_bar, ["Found streams"])
         for s in yt_streams:
             streams.append(s)
             line = f"{s.mime_type:<10}"
@@ -136,6 +130,8 @@ def main():
             # else:
             #     line += f"{'':>6}"
             stream_list.append(line)
+            
+        app.after(0, update_status_bar, ["Found streams"])
 
     def on_click_download_button():
         if stream_list.value != None:
@@ -164,6 +160,18 @@ def main():
         except:
             app.after(0, update_status_bar, ["Cant download stream"])
     
+    def update_url_info(title, duration, author):
+        video_title.value = title
+        video_duration.value = f"{timedelta(seconds=duration)}"
+        video_author.value = author
+
+    def update_stream_list(id, percent):
+        base_string = stream_list.items[id]
+        progress_string = f"{percent:>5.0f}%"
+        updated_string = f"{base_string[:48]}{progress_string}{base_string[54:]}"
+        stream_list.remove(stream_list.items[id])
+        stream_list.insert(id, updated_string)
+
     def update_thumbnail(thumbnail_url):
         try:
             video_thumbnail.image = Image.open(urlopen(thumbnail_url))
