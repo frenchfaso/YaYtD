@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(
-    ['yaytd.py'],
+    ['main.py'],
     pathex=[],
     binaries=[],
     datas=[('yaytd_logo_64.png', '.')],
