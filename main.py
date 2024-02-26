@@ -1,5 +1,7 @@
 # Imports
+import os
 import sys
+import certifi
 from PIL import Image
 from tkinter import Menu
 from tkinter.constants import *
@@ -262,4 +264,5 @@ def main():
     app.display()
 
 if(__name__ == "__main__"):
+    os.environ['SSL_CERT_FILE'] = certifi.where()
     main()
