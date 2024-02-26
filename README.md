@@ -13,10 +13,11 @@ YayTD is a simple GUI built on top of [pytube](https://github.com/pytube/pytube)
 It lets you find all streams associated with a YouTube video (audio only, video only or both combined) and download them to your machine for your convenience.
 # Did we really need another one?
 Probably not. But it seemed the perfect toy-project to learn about guizero, additionally, as an occasional user of the pytube cli I wondered how a handy GUI would have looked like.
-# Install
-## (work in progress... pre-built binaries should be available soon...)
-Head to the releases and download your pre-built flavor (Linux, Mac, Windows)
-
+# How
+## Install
+Head to the [releases](https://github.com/frenchfaso/YayTD/releases) and download the zip for your OS (Linux, Mac, Windows).  
+Unzip and run the single-file executable.
+## Build
 Or clone this repo and do:
 ```console
 python -m venv env
@@ -30,7 +31,7 @@ now you can either run YayTD with
 ```console
 python yaytd.py
 ```
-or build a single file executable for your platform:
+or build a single-file executable for your platform:
 
 Linux
 ```console
